@@ -1,6 +1,6 @@
 lui t0, 0
 lui t1, 1
-srli t1, t1, 12
+#srli t1, t1, 12
 
 add t2, t1, t0 # t2 = t1 +t0
 
