@@ -1,0 +1,7 @@
+fetch instructions to execute from the program ROM 
+increment the program counter by 4; 
+decode each instruction; 
+select arguments from the register file; 
+compute results; 
+do nothing in the memory stage; 
+and store results back in the register file
