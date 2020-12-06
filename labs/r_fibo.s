@@ -21,6 +21,7 @@ BEQ a0, t0, elif # branch to elif IF n=1
 SUB a0, a0, t0 # pass (n-1) to argument
 SW t0, 0(sp) # caller save
 SW t1, 4(sp) # caller save
+# FIRST calling
 JAL ra, r_fibonacci
 LW t0, 0(sp) # restore caller-save
 LW t1, 4(sp)
@@ -31,11 +32,13 @@ ADDI s1, x0, 2
 SUB a0, t1, s1 # pass (n-2) to argument
 SW t0, 0(sp) # caller save
 SW t1, 4(sp) # caller save
+# SECOND calling
 JAL ra, r_fibonacci
 LW t0, 0(sp) # restore caller-save
 LW t1, 4(sp)
 
 ADD a0, t0, a0 
+JAL x0, epilogue
 
 if:
 ADDI a0, x0, 0 
