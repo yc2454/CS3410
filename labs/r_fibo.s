@@ -1,58 +1,58 @@
-addi sp, x0, 1000
-addi fp, x0, 1000
-addi a0, x0, 4 //change n to an integer argument
-jal ra, r_fibonacci
+addi x2, x0, 1000
+addi x8, x0, 1000
+addi x10, x0, 5
+jal x1, r_fibo
 jal x0, exit
 
-r_fibonacci:
+r_fibo:
 # Prologue
-ADDI sp, sp, -24 # allocation
-SW ra, 16(sp) # save Return Addr
-SW fp, 12(sp) # save Frame pointer
-SW s1, 8(sp) # Callee-save
-ADDI fp, sp, 20 # compute new frame pointer
+ADDI x2, x2, -24 # allocation
+SW x1, 16(x2) # save Return Addr
+SW x8, 12(x2) # save Fx1me pointer
+SW x9, 8(x2) # Callee-save
+ADDI x8, x2, 20 # compute new fx1me pointer
 
 # Body
-ADDI t0, x0, 1 # save 1 to t0
-ADD t1, x0, a0 # save n to t1
-BEQ a0, x0, if # branch to if IF n=0
-BEQ a0, t0, elif # branch to elif IF n=1
+ADDI x5, x0, 1 # save 1 to x5
+ADD t1, x0, x10 # save n to t1
+BEQ x10, x0, if # bx1nch to if IF n=0
+BEQ x10, x5, elif # bx1nch to elif IF n=1
 
-SUB a0, a0, t0 # pass (n-1) to argument
-SW t0, 0(sp) # caller save
-SW t1, 4(sp) # caller save
+SUB x10, x10, x5 # pass (n-1) to argument
+SW x5, 0(x2) # caller save
+SW t1, 4(x2) # caller save
 # FIRST calling
-JAL ra, r_fibonacci
-LW t0, 0(sp) # restore caller-save
-LW t1, 4(sp)
+JAL x1, r_fibo
+LW x5, 0(x2) # restore caller-save
+LW t1, 4(x2)
 
-ADDI t0, a0, 0 # save r_fibo(n-1) to t0
+ADDI x5, x10, 0 # save r_fibo(n-1) to x5
 
-ADDI s1, x0, 2
-SUB a0, t1, s1 # pass (n-2) to argument
-SW t0, 0(sp) # caller save
-SW t1, 4(sp) # caller save
+ADDI x9, x0, 2
+SUB x10, t1, x9 # pass (n-2) to argument
+SW x5, 0(x2) # caller save
+SW t1, 4(x2) # caller save
 # SECOND calling
-JAL ra, r_fibonacci
-LW t0, 0(sp) # restore caller-save
-LW t1, 4(sp)
+JAL x1, r_fibo
+LW x5, 0(x2) # restore caller-save
+LW t1, 4(x2)
 
-ADD a0, t0, a0 
+ADD x10, x5, x10 
 JAL x0, epilogue
 
 if:
-ADDI a0, x0, 0 
+ADDI x10, x0, 0 
 JAL x0, epilogue
 
 elif:
-ADDI a0, x0, 1 
+ADDI x10, x0, 1 
 
 # epilogue
 epilogue:
-LW s1, 8(sp) # restore old s1
-LW fp, 12(sp) # restore
-LW ra, 16(sp) # restore
-ADDI sp, sp, 24 # stack back
-JALR x0, ra, 0 # jump back
+LW x9, 8(x2) # restore old x9
+LW x8, 12(x2) # restore
+LW x1, 16(x2) # restore
+ADDI x2, x2, 24 # stack back
+JALR x0, x1, 0 # jump back
 
 exit:
