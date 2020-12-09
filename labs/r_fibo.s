@@ -1,6 +1,6 @@
 addi x2, x0, 1000
 addi x8, x0, 1000
-addi x10, x0, 5 
+addi x10, x0, 5
 jal x1, r_fibo
 jal x0, exit
 
@@ -22,7 +22,7 @@ SUB x10, x10, x5 # pass (n-1) to argument
 SW x5, 0(x2) # caller save
 SW t1, 4(x2) # caller save
 # FIRST calling
-JAL x1, 20
+JAL x1, r_fibo
 LW x5, 0(x2) # restore caller-save
 LW t1, 4(x2)
 
@@ -33,7 +33,7 @@ SUB x10, t1, x9 # pass (n-2) to argument
 SW x5, 0(x2) # caller save
 SW t1, 4(x2) # caller save
 # SECOND calling
-JAL x1, 20
+JAL x1, r_fibo
 LW x5, 0(x2) # restore caller-save
 LW t1, 4(x2)
 
